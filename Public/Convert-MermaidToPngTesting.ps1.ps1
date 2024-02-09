@@ -1,4 +1,4 @@
-function Convert-MermaidToPng {
+function Convert-MermaidToPngTesting {
     <#
     .SYNOPSIS
     Converts a Markdown file to a PNG image containing the rendered Mermaid diagrams.
@@ -75,14 +75,22 @@ $MarkdownContent
 </html>
 "@
     $HtmlContent | Out-File -FilePath $TempHtmlFile -Encoding UTF8
- 
-    $renderLoop = $true
-    while ($renderLoop) {
+    
+    do {
         # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
         $TempPngFileName = "$($FileNameWithoutExtension)-$($WindowWidth)x$($WindowHeight).png"
         $TempPngFilePath = Join-Path -Path $ParentPath -ChildPath $TempPngFileName
         Start-Process -FilePath msedge -ArgumentList "--headless --disable-gpu --window-size=$WindowWidth,$WindowHeight --screenshot=$TempPngFilePath", $TempHtmlFile -Wait
 
+        
+
+    } while ( (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) -eq $false) -and ( (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) -eq $false) )
+
+    $ExpandLoop = $true
+    while ($ExpandLoop) {
+        
+        # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
+       
         if (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) {
             Write-Host "Right Scrollbar detected, adding 5 px to height."
             $WindowHeight += 5
@@ -98,7 +106,7 @@ $MarkdownContent
         if ( ( (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) -eq $false) -and ( (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) -eq $false) ) {
             $FinalOutputFilePath = Join-Path -Path $ParentPath -ChildPath "$($FileNameWithoutExtension).png"
             Copy-Item -Path $TempPngFilePath -Destination $FinalOutputFilePath -Force
-            $renderLoop = $false
+            $ExpandLoop = $false
         }
     }
  
