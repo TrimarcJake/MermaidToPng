@@ -90,7 +90,7 @@ $MarkdownContent
         }
  
         if (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) {
-            Write-Host "Bottom Scrollbar Detected, adding 10 px to width."
+            Write-Host "Bottom Scrollbar Detected, adding 5 px to width."
             $WindowWidth += 5
             Write-Host "New window width: $WindowWidth"
         }
