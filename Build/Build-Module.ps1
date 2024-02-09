@@ -1,20 +1,22 @@
 ﻿Build-Module -ModuleName 'MermaidToPng' {
     # Usual defaults as per standard module
     $Manifest = [ordered] @{
-        ModuleVersion          = '1.0.0'
+        ModuleVersion          = '2024.2.8'
         CompatiblePSEditions   = @('Desktop', 'Core')
         GUID                   = '7dcbf923-6543-4c54-b309-690be4a3b018'
-        Author                 = 'Author'
-        CompanyName            = 'CompanyName'
-        Copyright              = "(c) 2011 - $((Get-Date).Year) Author @ CompanyName. All rights reserved."
+        Author                 = 'Jake Hildreth'
+        CompanyName            = ''
+        Copyright              = "(c) 2024 - $((Get-Date).Year) Jake Hildreth. All rights reserved."
         Description            = 'Simple project MermaidToPng'
         PowerShellVersion      = '5.1'
-        Tags                   = @('Windows', 'MacOS', 'Linux')
+        Tags                   = @('Mermaid', 'Png', 'Markdown', 'Documentation', 'Image', 'Convert')
     }
     New-ConfigurationManifest @Manifest
 
     # Add standard module dependencies (directly, but can be used with loop as well)
     #New-ConfigurationModule -Type RequiredModule -Name 'PSSharedGoods' -Guid 'Auto' -Version 'Latest'
+    New-ConfigurationModule -Type RequiredModule -Name 'Microsoft.PowerShell.Management' -Guid 'Auto' -Version 'Latest'
+    New-ConfigurationModule -Type RequiredModule -Name 'Microsoft.PowerShell.Utility' -Guid 'Auto' -Version 'Latest'
 
     # Add external module dependencies, using loop for simplicity
     #foreach ($Module in @('Microsoft.PowerShell.Utility', 'Microsoft.PowerShell.Archive', 'Microsoft.PowerShell.Management', 'Microsoft.PowerShell.Security')) {

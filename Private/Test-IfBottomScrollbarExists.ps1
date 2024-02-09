@@ -5,7 +5,7 @@ function Test-IfBottomScrollbarExists {
 
     .DESCRIPTION
         This function takes an image file path as input and determines if a bottom scrollbar exists in the image.
-        It does this by analyzing the bottommost 5 pixels of the image and calculating the average color.
+        It does this by analyzing the bottommost 15 pixels of the image and calculating the average color.
         If the average color is not pure white (ffffffff), it indicates the presence of a scrollbar.
 
     .PARAMETER ImagePath
@@ -27,8 +27,8 @@ function Test-IfBottomScrollbarExists {
     # Load the image
     $image = [System.Drawing.Image]::FromFile($ImagePath)
  
-    # Get the bottommost 5 pixels
-    $bottommostPixels = $image.Clone([System.Drawing.Rectangle]::FromLTRB(0, $image.Height - 5, $image.Width -5, $image.Height), $image.PixelFormat)
+    # Get the bottommost 15 pixels
+    $bottommostPixels = $image.Clone([System.Drawing.Rectangle]::FromLTRB(0, $image.Height - 15, $image.Width -15, $image.Height), $image.PixelFormat)
     Clear-Variable image
    
     # Calculate the average color

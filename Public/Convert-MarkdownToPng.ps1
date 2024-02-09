@@ -82,18 +82,18 @@ $MarkdownContent
         $TempPngFileName = "$($FileNameWithoutExtension)-$($WindowWidth)x$($WindowHeight).png"
         $TempPngFilePath = Join-Path -Path $ParentPath -ChildPath $TempPngFileName
         Start-Process -FilePath msedge -ArgumentList "--headless --disable-gpu --window-size=$WindowWidth,$WindowHeight --screenshot=$TempPngFilePath", $TempHtmlFile -Wait
-       
+
         # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
        
         if (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) {
-            Write-Host "Right Scrollbar detected, adding 10 px to height."
-            $WindowHeight += 10
+            Write-Host "Right Scrollbar detected, adding 5 px to height."
+            $WindowHeight += 5
             Write-Host "New window height: $WindowHeight"
         }
  
         if (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) {
             Write-Host "Bottom Scrollbar Detected, adding 10 px to width."
-            $WindowWidth += 10
+            $WindowWidth += 5
             Write-Host "New window width: $WindowWidth"
         }
  
@@ -107,6 +107,7 @@ $MarkdownContent
     Write-Output "Conversion complete. PNG file saved as: $FinalOutputFilePath"
  
     # Clean up temporary files
+    $TempPngs = Get-ChildItem $ParentPath "$($FileNameWithoutExtension)-*x*.png"
     Remove-Item -Path $TempHtmlFile -Force
     $TempPngs | Remove-Item -Force
 }
