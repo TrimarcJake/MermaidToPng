@@ -6,7 +6,7 @@
     CompatiblePSEditions = @('Desktop', 'Core')
     Copyright            = '(c) 2024 - 2024 Jake Hildreth. All rights reserved.'
     Description          = 'Simple project MermaidToPng'
-    FunctionsToExport    = @('Convert-MermaidToPng', 'Convert-MermaidToPngTesting')
+    FunctionsToExport    = 'Convert-MermaidToPng'
     GUID                 = '7dcbf923-6543-4c54-b309-690be4a3b018'
     ModuleVersion        = '2024.2.8'
     PowerShellVersion    = '5.1'
