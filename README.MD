@@ -9,6 +9,13 @@ A micro-module for converting Mermaid-formatted Markdown files into PNGs using o
   - If there isnt whitespace all around the image, expand the Edge viewing area
   - Crops all unnecessary whitespace
 
+### Installation
+``` powershell
+git clone https://github.com/TrimarcJake/MermaidToPng.git
+cd ./MermaidToPng
+Import-Module ./MermaidToPng.psd1
+```
+
 ### Usage:
 ``` powershell
 Convert-MermaidToPng -FilePath 'C:\path\to\input.md'
