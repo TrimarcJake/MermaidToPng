@@ -1,8 +1,13 @@
-﻿# MermaidToPng
+# MermaidToPng
 A micro-module for converting Mermaid-formatted Markdown files into PNGs using only Powershell and Edge.
 
 ## Basic Overview
-  - Reads 
+  - Reads a Mermaid-formatted Markdown file
+  - Creates a tiny HTML file that includes the Mermaid javascript and the Mermaid-formatted Markdown
+  - Opens the tiny HTML in a headless instance of Edge, takes a screenshot of the Mermaid chart, and saves it as a PNG
+  - Checks the screenshot to ensure there is whitespace all around the image
+  - If there isnt whitespace all around the image, expand the Edge viewing area
+  - Crops all unnecessary whitespace
 
 ### Usage:
 ``` powershell
