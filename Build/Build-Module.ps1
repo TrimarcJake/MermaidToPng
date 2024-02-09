@@ -1,7 +1,7 @@
 ﻿Build-Module -ModuleName 'MermaidToPng' {
     # Usual defaults as per standard module
     $Manifest = [ordered] @{
-        ModuleVersion          = '2024.2.8'
+        ModuleVersion          = (Get-Date -Format yyyy.M.d)
         CompatiblePSEditions   = @('Desktop', 'Core')
         GUID                   = '7dcbf923-6543-4c54-b309-690be4a3b018'
         Author                 = 'Jake Hildreth'

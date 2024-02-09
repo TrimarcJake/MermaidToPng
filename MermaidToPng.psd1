@@ -8,7 +8,7 @@
     Description          = 'Simple project MermaidToPng'
     FunctionsToExport    = 'Convert-MermaidToPng'
     GUID                 = '7dcbf923-6543-4c54-b309-690be4a3b018'
-    ModuleVersion        = '2024.2.8'
+    ModuleVersion        = '2024.2.9'
     PowerShellVersion    = '5.1'
     PrivateData          = @{
         PSData = @{
