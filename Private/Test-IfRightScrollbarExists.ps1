@@ -1,4 +1,24 @@
 function Test-IfRightScrollbarExists {
+    <#
+    .SYNOPSIS
+        Tests if a right scrollbar exists in an image.
+
+    .DESCRIPTION
+        This function takes an image file path as input and determines if a right scrollbar exists in the image.
+        It does this by analyzing the rightmost 5 pixels of the image and calculating the average color.
+        If the average color is not pure white (ffffffff), it indicates the presence of a scrollbar.
+
+    .PARAMETER ImagePath
+        Specifies the path of the image file to be tested.
+
+    .EXAMPLE
+        Test-IfRightScrollbarExists -ImagePath "C:\Images\image.png"
+        This example tests if a right scrollbar exists in the image located at "C:\Images\image.png".
+
+    .OUTPUTS
+        System.Boolean
+        Returns $true if a right scrollbar exists, otherwise returns $false.
+    #>
     param (
         [Parameter(Mandatory = $true)]
         [string]$ImagePath
@@ -7,7 +27,7 @@ function Test-IfRightScrollbarExists {
     # Load the image
     $image = [System.Drawing.Image]::FromFile($ImagePath)
  
-    # Get the rightmost 15 pixels
+    # Get the rightmost 5 pixels
     $rightmostPixels = $image.Clone([System.Drawing.Rectangle]::FromLTRB($image.Width - 5, 0, $image.Width, $image.Height - 5), $image.PixelFormat)
     Clear-Variable image
    
