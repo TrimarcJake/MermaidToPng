@@ -1,11 +1,11 @@
 function Get-RightmostNonWhiteColumnIndex {
     <#
     .SYNOPSIS
-        Get the index of the rightmost non-white column in an image.
+        Get the index of the rightmost column that includes non-white pixels in an image.
 
     .DESCRIPTION
-        This function takes an image file path as input and returns the index of the rightmost non-white column in the image.
-        It iterates through each column from right to left and checks if the pixel is not pure white.
+        This function takes an image file path as input and returns the index of the rightmost column that includes non-white pixels in the image.
+        It iterates through each column from right to left and checks if any pixel in that column is not pure white.
         If a non-white pixel is found, the function returns the zero-based index of that column.
         If all pixels are white, the function returns -1.
 
@@ -14,11 +14,11 @@ function Get-RightmostNonWhiteColumnIndex {
 
     .OUTPUTS
         System.Int32
-        The index of the rightmost non-white column in the image. If all pixels are white, -1 is returned.
+        The index of the rightmost column that includes non-white pixels in the image. If all pixels are white, -1 is returned.
 
     .EXAMPLE
-        Get-RightmostNonWhiteColumn -ImagePath "C:\Images\image.jpg"
-        Returns: 123
+        Get-RightmostNonWhiteColumnIndex -ImagePath "C:\Images\image.jpg"
+        Returns: 789
 
     #>
 
@@ -29,7 +29,7 @@ function Get-RightmostNonWhiteColumnIndex {
     # Load the image
     $image = [System.Drawing.Image]::FromFile($ImagePath)
     $bitmap = New-Object System.Drawing.Bitmap $image
-
+    
     # Iterate through each column from right to left
     for ($x = $bitmap.Width - 1; $x -ge 0; $x--) {
         for ($y = 0; $y -lt $bitmap.Height; $y++) {
@@ -37,7 +37,7 @@ function Get-RightmostNonWhiteColumnIndex {
 
             # Check if the pixel is not pure white
             if ($pixel.R -ne 255 -or $pixel.G -ne 255 -or $pixel.B -ne 255) {
-                # Return the zero-based index of the rightmost non-white column
+                # Return the zero-based index of the rightmost column that includes non-white pixels
                 $bitmap.Dispose()
                 return $x
             }
