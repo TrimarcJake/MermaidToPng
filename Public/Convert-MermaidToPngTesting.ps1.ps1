@@ -82,34 +82,61 @@ $MarkdownContent
         $TempPngFilePath = Join-Path -Path $ParentPath -ChildPath $TempPngFileName
         Start-Process -FilePath msedge -ArgumentList "--headless --disable-gpu --window-size=$WindowWidth,$WindowHeight --screenshot=$TempPngFilePath", $TempHtmlFile -Wait
 
-        
-
-    } while ( (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) -eq $false) -and ( (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) -eq $false) )
-
-    $ExpandLoop = $true
-    while ($ExpandLoop) {
-        
-        # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
-       
-        if (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) {
-            Write-Host "Right Scrollbar detected, adding 5 px to height."
-            $WindowHeight += 5
+        if ( (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) -eq $false) {
+            Write-Host "Bottom whitespace detected, subtracting 10 px from height."
+            $WindowHeight -= 10
             Write-Host "New window height: $WindowHeight"
         }
- 
-        if (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) {
-            Write-Host "Bottom Scrollbar Detected, adding 10 px to width."
-            $WindowWidth += 5
+    } while ( (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) -eq $false)
+
+    $WindowHeight += 10
+    
+    do {
+        # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
+        $TempPngFileName = "$($FileNameWithoutExtension)-$($WindowWidth)x$($WindowHeight).png"
+        $TempPngFilePath = Join-Path -Path $ParentPath -ChildPath $TempPngFileName
+        Start-Process -FilePath msedge -ArgumentList "--headless --disable-gpu --window-size=$WindowWidth,$WindowHeight --screenshot=$TempPngFilePath", $TempHtmlFile -Wait
+
+        if ( (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) -ne $true) {
+            Write-Host "Right whitespace detected, subtracting 10 px from width."
+            $WindowWidth -= 10
             Write-Host "New window width: $WindowWidth"
         }
- 
-        if ( ( (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) -eq $false) -and ( (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) -eq $false) ) {
-            $FinalOutputFilePath = Join-Path -Path $ParentPath -ChildPath "$($FileNameWithoutExtension).png"
-            Copy-Item -Path $TempPngFilePath -Destination $FinalOutputFilePath -Force
-            $ExpandLoop = $false
+    } while ( (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) -ne $true)
+
+    # $WindowWidth += 10
+
+    $ExpandLoop = $true
+    do {
+        # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
+        $TempPngFileName = "$($FileNameWithoutExtension)-$($WindowWidth)x$($WindowHeight).png"
+        $TempPngFilePath = Join-Path -Path $ParentPath -ChildPath $TempPngFileName
+        Start-Process -FilePath msedge -ArgumentList "--headless --disable-gpu --window-size=$WindowWidth,$WindowHeight --screenshot=$TempPngFilePath", $TempHtmlFile -Wait
+
+        if (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) {
+            Write-Host "Right Scrollbar detected, adding 10 px to height."
+            $WindowHeight += 10
+            Write-Host "New window height: $WindowHeight"
         }
-    }
+    } while (Test-IfRightScrollbarExists -ImagePath $TempPngFilePath) 
+    
+    do {
+        # Use PowerShell's built-in `msedge` command to convert the HTML to PNG via screenshot
+        $TempPngFileName = "$($FileNameWithoutExtension)-$($WindowWidth)x$($WindowHeight).png"
+        $TempPngFilePath = Join-Path -Path $ParentPath -ChildPath $TempPngFileName
+        Start-Process -FilePath msedge -ArgumentList "--headless --disable-gpu --window-size=$WindowWidth,$WindowHeight --screenshot=$TempPngFilePath", $TempHtmlFile -Wait
+
+        if (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath) {
+            Write-Host "Bottom Scrollbar Detected, adding 10 px to width."
+            $WindowWidth += 10
+            Write-Host "New window width: $WindowWidth"
+        }
+    } while (Test-IfBottomScrollbarExists -ImagePath $TempPngFilePath)
  
+    $FinalOutputFilePath = Join-Path -Path $ParentPath -ChildPath "$($FileNameWithoutExtension).png"
+    Copy-Item -Path $TempPngFilePath -Destination $FinalOutputFilePath -Force
+    $ExpandLoop = $false
+
     Write-Output "Conversion complete. PNG file saved as: $FinalOutputFilePath"
  
     # Clean up temporary files
