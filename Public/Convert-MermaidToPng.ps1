@@ -1,22 +1,25 @@
 function Convert-MermaidToPng {
     <#
     .SYNOPSIS
-    Converts a Markdown file to a PNG image containing the rendered Mermaid diagrams.
+        Converts a Markdown file to a PNG image containing the rendered Mermaid diagrams.
  
     .DESCRIPTION
-    This script takes a Markdown file as input, extracts the Mermaid code blocks from it, and converts them into a PNG image using the Microsoft Edge browser in headless mode. The resulting PNG image is saved in the same directory as the input file.
+        This script takes a Markdown file as input, extracts a Mermaid-formatted code block from it,
+        and converts it into a PNG image using the Microsoft Edge browser in headless mode.
+        The resulting PNG image is saved in the same directory as the input file.
  
     .PARAMETER FilePath
-    The path to the Markdown file to be converted. The file must exist and be a valid Markdown file.
+        The path to the Markdown file to be converted. The file must exist and be a valid Markdown file.
  
     .EXAMPLE
-    Convert-MermaidToPng -FilePath "C:\path\to\input.md"
-    Converts the Markdown file located at "C:\path\to\input.md" to a PNG image.
+        Convert-MermaidToPng -FilePath "C:\path\to\input.md"
+        Converts the Markdown file located at "C:\path\to\input.md" to a PNG image.
  
     .NOTES
-    - This script requires Microsoft Edge browser to be installed on the system.
-    - The script uses the Mermaid library for rendering the diagrams.
-    - The script currently only supports basic Mermaid code blocks and does not handle indented code fences or code fences with language identifiers.
+        - This script only works on Windows and requires Microsoft Edge browser to be installed on the system.
+        - The script uses the Mermaid library for rendering the diagrams.
+        - The script currently only supports basic Mermaid code blocks and does not handle indented code fences
+            or code fences with language identifiers.
     #>
     param (
         [Parameter(Mandatory = $true, Position = 0)]
