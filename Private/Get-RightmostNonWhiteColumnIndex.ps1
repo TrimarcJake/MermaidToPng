@@ -29,6 +29,7 @@ function Get-RightmostNonWhiteColumnIndex {
     # Load the image
     $image = [System.Drawing.Image]::FromFile($ImagePath)
     $bitmap = New-Object System.Drawing.Bitmap $image
+    $image.Dispose()
     
     # Iterate through each column from right to left
     for ($x = $bitmap.Width - 1; $x -ge 0; $x--) {

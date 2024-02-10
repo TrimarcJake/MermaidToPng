@@ -29,6 +29,7 @@ function Get-BottommostNonWhiteRowIndex {
     # Load the image
     $image = [System.Drawing.Image]::FromFile($ImagePath)
     $bitmap = New-Object System.Drawing.Bitmap $image
+    $image.Dispose()
 
     # Iterate through each row from bottom to top
     for ($y = $bitmap.Height - 1; $y -ge 0; $y--) {
